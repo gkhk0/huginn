@@ -1,4 +1,4 @@
-use crate::types::vectors::{Vector3, AXIS};
+use crate::types::vectors::AXIS;
 use crate::utils::{
     cubic_interpolate, cubic_interpolate_in_time, float, int, is_equal_approx,
     is_equal_approx_with_tolerance, is_zero_approx, posmod_f, snapped, FloatExt, UNIT_EPSILON,
@@ -438,8 +438,22 @@ impl_op_ex!(*|a: &Vector4, b: &Vector4| -> Vector4 {
     Vector4::new(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w)
 });
 
+impl_op_ex!(*= |a: &mut Vector4, b: &Vector4| {
+    a.x = a.x * b.x;
+    a.y = a.y * b.y;
+    a.z = a.z * b.z;
+    a.w = a.w * b.w;
+});
+
 impl_op_ex_commutative!(*|a: &Vector4, b: &float!()| -> Vector4 {
     Vector4::new(a.x * b, a.y * b, a.z * b, a.w * b)
+});
+
+impl_op_ex!(*= |a: &mut Vector4, b: &float!()| {
+    a.x = a.x * b;
+    a.y = a.y * b;
+    a.z = a.z * b;
+    a.w = a.w * b;
 });
 
 impl_op_ex_commutative!(*|a: &Vector4, b: int!()| -> Vector4 {
@@ -451,6 +465,13 @@ impl_op_ex_commutative!(*|a: &Vector4, b: int!()| -> Vector4 {
     )
 });
 
+impl_op_ex!(*= |a: &mut Vector4, b: int!()| {
+    a.x = a.x * b as float!();
+    a.y = a.y * b as float!();
+    a.z = a.z * b as float!();
+    a.w = a.w * b as float!();
+});
+
 impl_op_ex!(+ |a: &Vector4, b: &Vector4| -> Vector4 {
     Vector4::new(
         a.x + b.x,
@@ -460,8 +481,22 @@ impl_op_ex!(+ |a: &Vector4, b: &Vector4| -> Vector4 {
     )
 });
 
+impl_op_ex!(+= |a: &mut Vector4, b: &Vector4|{
+    a.x = a.x + b.x;
+    a.y = a.y + b.y;
+    a.z = a.z + b.z;
+    a.w = a.w + b.w;
+});
+
 impl_op_ex!(-|a: &Vector4, b: &Vector4| -> Vector4 {
     Vector4::new(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w)
+});
+
+impl_op_ex!(-= |a: &mut Vector4, b: &Vector4| {
+    a.x = a.x - b.x;
+    a.y = a.y - b.y;
+    a.z = a.z - b.z;
+    a.w = a.w - b.w;
 });
 
 impl_op_ex!(/ |a: &Vector4, b: &Vector4| -> Vector4 {
@@ -473,6 +508,13 @@ impl_op_ex!(/ |a: &Vector4, b: &Vector4| -> Vector4 {
     )
 });
 
+impl_op_ex!(/= |a: &mut Vector4, b: &Vector4| {
+    a.x = a.x / b.x;
+    a.y = a.y / b.y;
+    a.z = a.z / b.z;
+    a.w = a.w / b.w;
+});
+
 impl_op_ex_commutative!(/ |a: &Vector4, b: &float!()| -> Vector4 {
     Vector4::new(
         a.x / b,
@@ -482,6 +524,13 @@ impl_op_ex_commutative!(/ |a: &Vector4, b: &float!()| -> Vector4 {
     )
 });
 
+impl_op_ex!(/= |a: &mut Vector4, b: &float!()| {
+    a.x = a.x / b;
+    a.y = a.y / b;
+    a.z = a.z / b;
+    a.w = a.w / b;
+});
+
 impl_op_ex_commutative!(/ |a: &Vector4, b: int!()| -> Vector4 {
     Vector4::new(
         a.x / b as float!(),
@@ -489,6 +538,13 @@ impl_op_ex_commutative!(/ |a: &Vector4, b: int!()| -> Vector4 {
         a.z / b as float!(),
         a.w / b as float!(),
     )
+});
+
+impl_op_ex!(/= |a: &mut Vector4, b: int!()| {
+    a.x = a.x / b as float!();
+    a.y = a.y / b as float!();
+    a.z = a.z / b as float!();
+    a.w = a.w / b as float!();
 });
 
 impl Not for Vector4 {
