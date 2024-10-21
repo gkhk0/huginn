@@ -65,7 +65,7 @@ impl Vector2i {
     }
 
     /// Returns the aspect ratio of this vector, the ratio of `x` to `y`.
-    pub const fn aspect(&self) -> float!() {
+    pub fn aspect(&self) -> float!() {
         self.x as float!() / self.y as float!()
     }
 
@@ -156,7 +156,7 @@ impl Vector2i {
         Self::new(snapped_i(self.x, step), snapped_i(self.y, step))
     }
 
-    pub const fn set(&mut self, index: usize, value: int!()) {
+    pub fn set(&mut self, index: usize, value: int!()) {
         match index {
             0 => self.x = value,
             1 => self.y = value,
@@ -172,7 +172,7 @@ impl Vector2i {
         }
     }
 
-    pub const fn set_axis(&mut self, axis: AXIS, value: int!()) {
+    pub fn set_axis(&mut self, axis: AXIS, value: int!()) {
         match axis {
             AXIS::X => self.x = value,
             AXIS::Y => self.y = value,

@@ -94,7 +94,7 @@ impl Vector3 {
         }
     }
 
-    pub const fn set(&mut self, index: usize, value: float!()) {
+    pub fn set(&mut self, index: usize, value: float!()) {
         match index {
             0 => self.x = value,
             1 => self.y = value,
@@ -112,7 +112,7 @@ impl Vector3 {
         }
     }
 
-    pub const fn set_axis(&mut self, axis: AXIS, value: float!()) {
+    pub fn set_axis(&mut self, axis: AXIS, value: float!()) {
         match axis {
             AXIS::X => self.x = value,
             AXIS::Y => self.y = value,
@@ -132,7 +132,7 @@ impl Vector3 {
     }
 
     /// Returns the derivative at the given `t` on the [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) defined by this vector and the given `control_1`, `control_2`, and `end` points.
-    pub const fn bezier_derivative(
+    pub fn bezier_derivative(
         &self,
         control_1: &Self,
         control_2: &Self,
@@ -147,7 +147,7 @@ impl Vector3 {
     }
 
     /// Returns the point at the given `t` on the [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) defined by this vector and the given `control_1`, `control_2`, and `end` points.
-    pub const fn bezier_interpolate(
+    pub fn bezier_interpolate(
         &self,
         control_1: &Self,
         control_2: &Self,
@@ -194,7 +194,7 @@ impl Vector3 {
     /// Returns the cross product of this vector and `with`.
     ///
     /// This returns a vector perpendicular to both this and `with`, which would be the normal vector of the plane defined by the two vectors. As there are two such vectors, in opposite directions, this method returns the vector defined by a right-handed coordinate system. If the two vectors are parallel this returns an empty vector, making it useful for testing if two vectors are parallel.
-    pub const fn cross(&self, with: &Self) -> Self {
+    pub fn cross(&self, with: &Self) -> Self {
         Self::new(
             self.y * with.z - self.z * with.y,
             self.z * with.x - self.x * with.z,
@@ -203,7 +203,7 @@ impl Vector3 {
     }
 
     /// Performs a cubic interpolation between this vector and `b` using `pre_a` and `post_b` as handles, and returns the result at position `weight`. `weight` is on the range of `0.0` to `1.0`, representing the amount of interpolation.
-    pub const fn cubic_interpolate(
+    pub fn cubic_interpolate(
         &self,
         b: &Self,
         pre_a: &Self,
@@ -267,7 +267,7 @@ impl Vector3 {
     /// When using unit (normalized) vectors, the result will always be between `-1.0` (180-degree angle) when the vectors are facing opposite directions, and `1.0` (0-degree angle) when the vectors are aligned.
     ///
     /// **Note:** a.dot(b) *is* equivalent to b.dot(a).
-    pub const fn dot(&self, with: &Self) -> float!() {
+    pub fn dot(&self, with: &Self) -> float!() {
         self.x * with.x + self.y * with.y + self.z * with.z
     }
 
@@ -277,7 +277,7 @@ impl Vector3 {
     }
 
     /// Returns the inverse of the vector. This is the same as `Vector3::new(1.0 / v.x, 1.0 / v.y, 1.0 / v.z)`.
-    pub const fn inverse(&self) -> Self {
+    pub fn inverse(&self) -> Self {
         Self::new(1.0 / self.x, 1.0 / self.y, 1.0 / self.z)
     }
 
@@ -289,7 +289,7 @@ impl Vector3 {
     }
 
     /// Returns `true` if this vector is finite, by calling `is_finite` on each component.
-    pub const fn is_finite(&self) -> bool {
+    pub fn is_finite(&self) -> bool {
         self.x.is_finite() && self.y.is_finite() && self.z.is_finite()
     }
 
@@ -313,7 +313,7 @@ impl Vector3 {
     /// Returns the squared length (squared magnitude) of this vector.
     ///
     /// This method runs faster than [`Vector3::length`], so prefer it if you need to compare vectors or need the squared distance for some formula.
-    pub const fn length_squared(&self) -> float!() {
+    pub fn length_squared(&self) -> float!() {
         let x2 = self.x * self.x;
         let y2 = self.y * self.y;
         let z2 = self.z * self.z;
@@ -346,7 +346,7 @@ impl Vector3 {
     }
 
     /// Returns the axis of the vector's highest value. If all components are equal, this method returns [`AXIS::X`].
-    pub const fn max_axis_index(&self) -> AXIS {
+    pub fn max_axis_index(&self) -> AXIS {
         if self.x < self.y {
             if self.y < self.z {
                 AXIS::Z
@@ -371,7 +371,7 @@ impl Vector3 {
     }
 
     /// Returns the axis of the vector's lowest value. If all components are equal, this method returns [`AXIS::Z`].
-    pub const fn min_axis_index(&self) -> AXIS {
+    pub fn min_axis_index(&self) -> AXIS {
         if self.x < self.y {
             if self.x < self.z {
                 AXIS::X
@@ -456,7 +456,7 @@ impl Vector3 {
     }
 
     /// Returns the outer product with `with`.
-    pub const fn outer(&self, with: &Self) -> Basis {
+    pub fn outer(&self, with: &Self) -> Basis {
         Basis::new(
             Self::new(self.x * with.x, self.x * with.y, self.x * with.z),
             Self::new(self.y * with.x, self.y * with.y, self.y * with.z),

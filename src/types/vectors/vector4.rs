@@ -80,7 +80,7 @@ impl Vector4 {
     }
 
     /// Performs a cubic interpolation between this vector and `b` using `pre_a` and `post_b` as handles, and returns the result at position `weight`. `weight` is on the range of `0.0` to `1.0`, representing the amount of interpolation.
-    pub const fn cubic_interpolate(
+    pub fn cubic_interpolate(
         &self,
         b: &Self,
         pre_a: &Self,
@@ -142,7 +142,7 @@ impl Vector4 {
     }
 
     /// Returns the dot product of this vector and `with`.
-    pub const fn dot(&self, with: &Self) -> float!() {
+    pub fn dot(&self, with: &Self) -> float!() {
         self.x * with.x + self.y * with.y + self.z * with.z + self.w * with.w
     }
 
@@ -157,7 +157,7 @@ impl Vector4 {
     }
 
     /// Returns the inverse of the vector. This is the same as `Vector4::new(1.0 / v.x, 1.0 / v.y, 1.0 / v.z, 1.0 / v.w)`.
-    pub const fn inverse(&self) -> Self {
+    pub fn inverse(&self) -> Self {
         Vector4::new(1.0 / self.x, 1.0 / self.y, 1.0 / self.z, 1.0 / self.w)
     }
 
@@ -170,7 +170,7 @@ impl Vector4 {
     }
 
     /// Returns `true` if this vector is finite, by calling `is_finite` on each component.
-    pub const fn is_finite(&self) -> bool {
+    pub fn is_finite(&self) -> bool {
         self.x.is_finite() && self.y.is_finite() && self.z.is_finite() && self.w.is_finite()
     }
 
@@ -197,7 +197,7 @@ impl Vector4 {
     /// Returns the squared length (squared magnitude) of this vector.
     ///
     /// This method runs faster than [`Vector4::length`], so prefer it if you need to compare vectors or need the squared distance for some formula.
-    pub const fn length_squared(&self) -> float!() {
+    pub fn length_squared(&self) -> float!() {
         self.dot(self)
     }
 
@@ -269,7 +269,7 @@ impl Vector4 {
     }
 
     /// Returns the axis of the vector's lowest value. If all components are equal, this method returns [`AXIS::W`].
-    pub const fn min_axis_index(&self) -> AXIS {
+    pub fn min_axis_index(&self) -> AXIS {
         if self.x < self.y {
             if self.x < self.z {
                 if self.x < self.w {
@@ -395,7 +395,7 @@ impl Vector4 {
         }
     }
 
-    pub const fn set(&mut self, index: usize, value: float!()) {
+    pub fn set(&mut self, index: usize, value: float!()) {
         match index {
             0 => self.x = value,
             1 => self.y = value,
@@ -414,7 +414,7 @@ impl Vector4 {
         }
     }
 
-    pub const fn set_axis(&mut self, axis: AXIS, value: float!()) {
+    pub fn set_axis(&mut self, axis: AXIS, value: float!()) {
         match axis {
             AXIS::X => self.x = value,
             AXIS::Y => self.y = value,

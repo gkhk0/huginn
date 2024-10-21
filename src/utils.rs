@@ -36,7 +36,7 @@ pub const CMP_EPSILON: float!() = 0.00001;
 pub const CMP_EPSILON2: float!() = CMP_EPSILON * CMP_EPSILON;
 pub const UNIT_EPSILON: float!() = 0.00001;
 
-pub const fn bezier_derivative(
+pub fn bezier_derivative(
     start: float!(),
     control_1: float!(),
     control_2: float!(),
@@ -52,7 +52,7 @@ pub const fn bezier_derivative(
         + (end - control_2) * 3.0 * t2
 }
 
-pub const fn bezier_interpolate(
+pub fn bezier_interpolate(
     start: float!(),
     control_1: float!(),
     control_2: float!(),
@@ -68,7 +68,7 @@ pub const fn bezier_interpolate(
     start * omt3 + control_1 * omt2 * t * 3.0 + control_2 * omt * t2 * 3.0 + end * t3
 }
 
-pub const fn cubic_interpolate(
+pub fn cubic_interpolate(
     from: float!(),
     to: float!(),
     pre: float!(),

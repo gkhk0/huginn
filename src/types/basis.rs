@@ -179,7 +179,7 @@ impl Basis {
     pub const fn x(self) -> Vector3 {
         self.get_column(0)
     }
-    pub const fn set_x(&mut self, vector: &Vector3) {
+    pub fn set_x(&mut self, vector: &Vector3) {
         self.set_column(0, vector);
     }
 
@@ -189,7 +189,7 @@ impl Basis {
     pub const fn y(self) -> Vector3 {
         self.get_column(1)
     }
-    pub const fn set_y(&mut self, vector: &Vector3) {
+    pub fn set_y(&mut self, vector: &Vector3) {
         self.set_column(1, vector);
     }
 
@@ -199,7 +199,7 @@ impl Basis {
     pub const fn z(self) -> Vector3 {
         self.get_column(2)
     }
-    pub const fn set_z(&mut self, vector: &Vector3) {
+    pub fn set_z(&mut self, vector: &Vector3) {
         self.set_column(2, vector);
     }
 
@@ -256,7 +256,7 @@ impl Basis {
     /// -    If the determinant is a negative number, the basis represents a negative scale.
     ///
     /// **Note:** If the basis's scale is the same for every axis, its determinant is always that scale by the power of 2.
-    pub const fn determinant(&self) -> float!() {
+    pub fn determinant(&self) -> float!() {
         self.x.x * (self.y.y * self.z.z - self.z.y * self.y.z)
             - self.y.x * (self.x.y * self.z.z - self.z.y * self.x.z)
             + self.z.x * (self.x.y * self.y.z - self.y.y * self.x.z)
@@ -577,7 +577,7 @@ impl Basis {
         det_sign * self.get_scale_abs()
     }
 
-    const fn set(
+    fn set(
         &mut self,
         xx: float!(),
         xy: float!(),
@@ -600,7 +600,7 @@ impl Basis {
         self.z.z = zz;
     }
 
-    const fn invert(&mut self) {
+    fn invert(&mut self) {
         macro_rules! cofac {
             ($row1:ident, $col1:ident, $row2:ident, $col2:ident) => {
                 self.$row1.$col1 * self.$row2.$col2 - self.$row1.$col2 * self.$row2.$col1
@@ -650,7 +650,7 @@ impl Basis {
     }
 
     /// Returns `true` if this basis is finite, by calling [`Vector3::is_finite`] on all vector components.
-    pub const fn is_finite(&self) -> bool {
+    pub fn is_finite(&self) -> bool {
         self.x.is_finite() && self.y.is_finite() && self.z.is_finite()
     }
 
@@ -774,21 +774,21 @@ impl Basis {
     /// Returns the transposed dot product between `with` and the `x` axis (see [`Basis::transposed`]).
     ///
     /// This is equivalent to `basis.x().dot(vector)`.
-    pub const fn t_dot_x(&self, with: &Vector3) -> float!() {
+    pub fn t_dot_x(&self, with: &Vector3) -> float!() {
         self.x.x * with.x + self.y.x * with.y + self.z.x * with.z
     }
 
     /// Returns the transposed dot product between `with` and the `y` axis (see [`Basis::transposed`]).
     ///
     /// This is equivalent to `basis.y().dot(vector)`.
-    pub const fn t_dot_y(&self, with: &Vector3) -> float!() {
+    pub fn t_dot_y(&self, with: &Vector3) -> float!() {
         self.x.y * with.x + self.y.y * with.y + self.z.y * with.z
     }
 
     /// Returns the transposed dot product between `with` and the `z` axis (see [`Basis::transposed`]).
     ///
     /// This is equivalent to `basis.z().dot(vector)`.
-    pub const fn t_dot_z(&self, with: &Vector3) -> float!() {
+    pub fn t_dot_z(&self, with: &Vector3) -> float!() {
         self.x.z * with.x + self.y.z * with.y + self.z.z * with.z
     }
 
@@ -831,7 +831,7 @@ impl Basis {
         }
     }
 
-    pub const fn set_row(&mut self, index: usize, row: &Vector3) {
+    pub fn set_row(&mut self, index: usize, row: &Vector3) {
         match index {
             0 => self.x = *row,
             1 => self.y = *row,
@@ -848,7 +848,7 @@ impl Basis {
             _ => panic!("Invalid index"),
         }
     }
-    pub const fn set_column(&mut self, index: usize, column: &Vector3) {
+    pub fn set_column(&mut self, index: usize, column: &Vector3) {
         match index {
             0 => {
                 self.x.x = column.x;
@@ -869,7 +869,7 @@ impl Basis {
         }
     }
 
-    pub const fn set_columns(
+    pub fn set_columns(
         &mut self,
         column_1: &Vector3,
         column_2: &Vector3,
@@ -906,7 +906,7 @@ impl Basis {
         self.z.y = xyzt + zyxs;
     }
 
-    const fn set_quaternion(&mut self, quaternion: Quaternion) {
+    fn set_quaternion(&mut self, quaternion: Quaternion) {
         let d = quaternion.length_squared();
         let s = 2.0 / d;
         let xs = quaternion.x * s;
@@ -934,7 +934,7 @@ impl Basis {
         );
     }
 
-    pub const fn xform(&self, vector: &Vector3) -> Vector3 {
+    pub fn xform(&self, vector: &Vector3) -> Vector3 {
         Vector3::new(self.x.dot(vector), self.y.dot(vector), self.z.dot(vector))
     }
 }

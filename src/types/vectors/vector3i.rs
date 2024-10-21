@@ -187,7 +187,7 @@ impl Vector3i {
             _ => panic!("Invalid index"),
         }
     }
-    pub const fn set(&mut self, index: usize, value: int!()) {
+    pub fn set(&mut self, index: usize, value: int!()) {
         match index {
             0 => self.x = value,
             1 => self.y = value,
@@ -205,7 +205,7 @@ impl Vector3i {
         }
     }
 
-    pub const fn set_axis(&mut self, axis: AXIS, value: int!()) {
+    pub fn set_axis(&mut self, axis: AXIS, value: int!()) {
         match axis {
             AXIS::X => self.x = value,
             AXIS::Y => self.y = value,
@@ -363,7 +363,7 @@ impl From<&Vector3> for Vector3i {
         Self {
             x: value.x.trunc() as int!(),
             y: value.y.trunc() as int!(),
-            z: value.z.trunc() as int!()
+            z: value.z.trunc() as int!(),
         }
     }
 }

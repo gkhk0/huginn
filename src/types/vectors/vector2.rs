@@ -100,12 +100,12 @@ impl Vector2 {
     }
 
     /// Returns the aspect ratio of this vector, the ratio of `x` to `y`.
-    pub const fn aspect(&self) -> float!() {
+    pub fn aspect(&self) -> float!() {
         self.x / self.y
     }
 
     /// Returns the derivative at the given `t` on the [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) defined by this vector and the given `control_1`, `control_2`, and `end` points.
-    pub const fn bezier_derivation(
+    pub fn bezier_derivation(
         &self,
         control_1: &Self,
         control_2: &Self,
@@ -119,7 +119,7 @@ impl Vector2 {
     }
 
     /// Returns the point at the given `t` on the [Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) defined by this vector and the given `control_1`, `control_2`, and `end` points.
-    pub const fn bezier_interpolate(
+    pub fn bezier_interpolate(
         &self,
         control_1: &Self,
         control_2: &Self,
@@ -168,12 +168,12 @@ impl Vector2 {
     /// This is the signed area of the parallelogram formed by the two vectors. If the second vector is clockwise from the first vector, then the cross product is the positive area. If counter-clockwise, the cross product is the negative area. If the two vectors are parallel this returns zero, making it useful for testing if two vectors are parallel.
     ///
     /// **Note:** Cross product is not defined in 2D mathematically. This method embeds the 2D vectors in the XY plane of 3D space and uses their cross product's Z component as the analog.
-    pub const fn cross(&self, with: &Self) -> float!() {
+    pub fn cross(&self, with: &Self) -> float!() {
         self.x * with.y - self.y * with.x
     }
 
     /// Performs a cubic interpolation between this vector and `b` using `pre_a` and `post_b` as handles, and returns the result at position `weight`. `weight` is on the range of `0.0` to `1.0`, representing the amount of interpolation.
-    pub const fn cubic_interpolate(
+    pub fn cubic_interpolate(
         &self,
         b: &Self,
         pre_a: &Self,
@@ -217,7 +217,7 @@ impl Vector2 {
     /// Returns the squared distance between this vector and `to`.
     ///
     /// This method runs faster than [`Vector2::distance_to`], so prefer it if you need to compare vectors or need the squared distance for some formula.
-    pub const fn distance_squared_to(&self, to: &Self) -> float!() {
+    pub fn distance_squared_to(&self, to: &Self) -> float!() {
         (self.x - to.x) * (self.x - to.x) + (self.y - to.y) * (self.y - to.y)
     }
 
@@ -233,7 +233,7 @@ impl Vector2 {
     /// When using unit (normalized) vectors, the result will always be between `-1.0` (180-degree angle) when the vectors are facing opposite directions, and `1.0` (0-degree angle) when the vectors are aligned.
     ///
     /// **Note:** `a.dot(b)` *is* equivalent to `b.dot(a)`.
-    pub const fn dot(&self, with: &Self) -> float!() {
+    pub fn dot(&self, with: &Self) -> float!() {
         self.x * with.x + self.y * with.y
     }
 
@@ -266,7 +266,7 @@ impl Vector2 {
         }
     }
 
-    pub const fn set(&mut self, index: usize, value: float!()) {
+    pub fn set(&mut self, index: usize, value: float!()) {
         match index {
             0 => self.x = value,
             1 => self.y = value,
@@ -282,7 +282,7 @@ impl Vector2 {
         }
     }
 
-    pub const fn set_axis(&mut self, axis: AXIS, value: float!()) {
+    pub fn set_axis(&mut self, axis: AXIS, value: float!()) {
         match axis {
             AXIS::X => self.x = value,
             AXIS::Y => self.y = value,
@@ -296,7 +296,7 @@ impl Vector2 {
     }
 
     /// Returns `true` if this vector is finite, by calling `is_finite` on each component.
-    pub const fn is_finite(&self) -> bool {
+    pub fn is_finite(&self) -> bool {
         self.x.is_finite() && self.y.is_finite()
     }
 
@@ -320,7 +320,7 @@ impl Vector2 {
     /// Returns the squared length (squared magnitude) of this vector.
     ///
     /// This method runs faster than [`Vector2::length`], so prefer it if you need to compare vectors or need the squared distance for some formula.
-    pub const fn length_squared(&self) -> float!() {
+    pub fn length_squared(&self) -> float!() {
         self.x * self.x + self.y * self.y
     }
 
@@ -349,7 +349,7 @@ impl Vector2 {
     }
 
     /// Returns the axis of the vector's highest value. If all components are equal, this method returns [`AXIS::X`].
-    pub const fn max_axis_index(&self) -> AXIS {
+    pub fn max_axis_index(&self) -> AXIS {
         if self.x < self.y {
             AXIS::Y
         } else {
@@ -368,7 +368,7 @@ impl Vector2 {
     }
 
     /// Returns the axis of the vector's lowest value. If all components are equal, this method returns [`AXIS::Y`].
-    pub const fn min_axis_index(&self) -> AXIS {
+    pub fn min_axis_index(&self) -> AXIS {
         if self.x < self.y {
             AXIS::X
         } else {
@@ -415,7 +415,7 @@ impl Vector2 {
     }
 
     /// Returns a perpendicular vector rotated 90-degrees counter-clockwise compared to the original, with the same length.
-    pub const fn orthogonal(&self) -> Self {
+    pub fn orthogonal(&self) -> Self {
         Self::new(self.y, -self.x)
     }
 

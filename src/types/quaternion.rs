@@ -66,7 +66,7 @@ impl Quaternion {
     /// Returns the dot product between this quaternion and `with`.
     ///
     /// This is equivalent to `(quat.x * with.x) + (quat.y * with.y) + (quat.z * with.z) + (quat.w * with.w)`.
-    pub const fn dot(&self, with: &Self) -> float!() {
+    pub fn dot(&self, with: &Self) -> float!() {
         self.x * with.x + self.y * with.y + self.z * with.z + self.w * with.w
     }
 
@@ -139,7 +139,7 @@ impl Quaternion {
     }
 
     /// Returns the inverse version of this quaternion, inverting the sign of every component except `w`.
-    pub const fn inverse(&self) -> Self {
+    pub fn inverse(&self) -> Self {
         Quaternion::new(-self.x, -self.y, -self.z, self.w)
     }
 
@@ -152,7 +152,7 @@ impl Quaternion {
     }
 
     /// Returns `true` if this quaternion is finite, by calling `is_finite` on each component.
-    pub const fn is_finite(&self) -> bool {
+    pub fn is_finite(&self) -> bool {
         self.w.is_finite() && self.x.is_finite() && self.y.is_finite() && self.z.is_finite()
     }
 
@@ -170,7 +170,7 @@ impl Quaternion {
     /// Returns this quaternion's length, squared.
     ///
     /// **Note:** This method is faster than [`Quaternion::length`], so prefer it if you only need to compare quaternion lengths.
-    pub const fn length_squared(&self) -> float!() {
+    pub fn length_squared(&self) -> float!() {
         self.dot(self)
     }
 
