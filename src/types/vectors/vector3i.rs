@@ -4,8 +4,15 @@ use crate::utils::{int, snapped_i};
 use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 use std::cmp::Ordering;
 use std::fmt::Display;
-use std::ops::Neg;
+use std::ops::{Neg, Not};
 
+/// A 3D vector using integer coordinates.
+///
+/// A 3-element structure that can be used to represent 3D grid coordinates or any other triplet of integers.
+///
+/// It uses integer coordinates and is therefore preferable to [`Vector3`] when exact precision is required.
+///
+/// **Note:** In a boolean context, a Vector3i will evaluate to `false` if it's equal to `Vector3i(0, 0, 0)`. Otherwise, a Vector3i will always evaluate to `true`.
 #[derive(Copy, Clone, Default, Debug)]
 pub struct Vector3i {
     /// The vector's X component. Also, accessible by using the index position `v.get(0)`.
@@ -358,5 +365,13 @@ impl From<&Vector3> for Vector3i {
             y: value.y.trunc() as int!(),
             z: value.z.trunc() as int!()
         }
+    }
+}
+
+impl Not for Vector3i {
+    type Output = bool;
+
+    fn not(self) -> Self::Output {
+        self.x == 0 && self.y == 0 && self.z == 0
     }
 }
