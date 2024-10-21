@@ -148,7 +148,7 @@ pub fn is_zero_approx(s: float!()) -> bool {
     s.abs() < CMP_EPSILON
 }
 
-pub const fn posmod_f(x: float!(), y: float!()) -> float!() {
+pub fn posmod_f(x: float!(), y: float!()) -> float!() {
     let mut value = x % y;
     if ((value < 0.0) && (y > 0.0)) || ((value > 0.0) && (y < 0.0)) {
         value += y;

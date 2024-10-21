@@ -331,7 +331,7 @@ impl Vector4 {
     }
 
     /// Returns a vector composed of the `posmod_f` of this vector's components and `module`.
-    pub const fn posmod(&self, module: float!()) -> Self {
+    pub fn posmod(&self, module: float!()) -> Self {
         Self::new(
             posmod_f(self.x, module),
             posmod_f(self.y, module),
@@ -341,7 +341,7 @@ impl Vector4 {
     }
 
     /// Returns a vector composed of the `posmod_f` of this vector's components and `module_v`'s components.
-    pub const fn posmod_v(&self, module_v: &Self) -> Self {
+    pub fn posmod_v(&self, module_v: &Self) -> Self {
         Self::new(
             posmod_f(self.x, module_v.x),
             posmod_f(self.y, module_v.y),
