@@ -1,9 +1,10 @@
-#![feature(more_float_constants)]
-
 use huginn::float;
 use huginn::types::vectors::{Vector3, Vector3i, AXIS};
 use huginn::utils::float_consts::TAU;
 use huginn::utils::{float_consts, CMP_EPSILON};
+
+const SQRT_3: float!() = 1.732050807568877293527446341505872367;
+const FRAC_1_SQRT_3: float!() = 0.577350269189625764509148780501957456;
 
 macro_rules! assert_approx_eq {
     ($x:expr, $y:expr) => {
@@ -242,7 +243,7 @@ fn length_methods() {
     );
     assert_approx_eq!(
         vector1.length(),
-        10.0 * float_consts::SQRT_3,
+        10.0 * SQRT_3,
         "length should work as expected."
     );
     assert_eq!(
@@ -273,9 +274,9 @@ fn limiting_methods() {
 
     assert!(
         vector.limit_length(1.0).is_equal_approx(&Vector3::new(
-            float_consts::FRAC_1_SQRT_3,
-            float_consts::FRAC_1_SQRT_3,
-            float_consts::FRAC_1_SQRT_3
+            FRAC_1_SQRT_3,
+            FRAC_1_SQRT_3,
+            FRAC_1_SQRT_3
         )),
         "limit_length should work as expected."
     );
@@ -283,9 +284,9 @@ fn limiting_methods() {
         vector.limit_length(5.0).is_equal_approx(
             &(5.0
                 * Vector3::new(
-                    float_consts::FRAC_1_SQRT_3,
-                    float_consts::FRAC_1_SQRT_3,
-                    float_consts::FRAC_1_SQRT_3
+                    FRAC_1_SQRT_3,
+                    FRAC_1_SQRT_3,
+                    FRAC_1_SQRT_3
                 ))
         ),
         "limit_length should work as expected."
@@ -337,9 +338,9 @@ fn normalization_methods() {
         Vector3::new(1.0, 1.0, 1.0)
             .normalized()
             .is_equal_approx(&Vector3::new(
-                float_consts::FRAC_1_SQRT_3,
-                float_consts::FRAC_1_SQRT_3,
-                float_consts::FRAC_1_SQRT_3
+                FRAC_1_SQRT_3,
+                FRAC_1_SQRT_3,
+                FRAC_1_SQRT_3
             )),
         "normalized should work as expected."
     );
@@ -486,12 +487,12 @@ fn operators() {
         "cast to String should work as expected."
     );
     assert_eq!(
-        Vector3::new(float_consts::E, float_consts::SQRT_2, float_consts::SQRT_3).to_string(),
+        Vector3::new(float_consts::E, float_consts::SQRT_2, SQRT_3).to_string(),
         format!(
             "Vector3({}, {}, {})",
             float_consts::E,
             float_consts::SQRT_2,
-            float_consts::SQRT_3
+            SQRT_3
         ),
         "cast to String should print the correct amount of digits for real_t = let."
     );
@@ -511,9 +512,9 @@ fn other_methods() {
         Vector3::new(1.0, 1.0, 1.0)
             .direction_to(&Vector3::new(2.0, 2.0, 2.0))
             .is_equal_approx(&Vector3::new(
-                float_consts::FRAC_1_SQRT_3,
-                float_consts::FRAC_1_SQRT_3,
-                float_consts::FRAC_1_SQRT_3
+                FRAC_1_SQRT_3,
+                FRAC_1_SQRT_3,
+                FRAC_1_SQRT_3
             )),
         "direction_to should work as expected."
     );
@@ -845,8 +846,8 @@ fn finite_number_checks() {
         for y in &infinite {
             for z in &infinite {
                 assert!(!
-                    Vector3::new(*x, *y, *z).is_finite(),
-                    "Vector3 with three components infinite should not be finite. Failed with: {}, {}, {}", x, y, z);
+                            Vector3::new(*x, *y, *z).is_finite(),
+                        "Vector3 with three components infinite should not be finite. Failed with: {}, {}, {}", x, y, z);
             }
         }
     }

@@ -1,7 +1,7 @@
-#![feature(more_float_constants)]
-
 use huginn::types::vectors::{Vector3, Vector3i, AXIS};
-use huginn::utils::{float_consts, CMP_EPSILON};
+use huginn::utils::{float_consts, CMP_EPSILON, float};
+
+const SQRT_3: float!() = 1.732050807568877293527446341505872367;
 
 macro_rules! assert_approx_eq {
     ($x:expr, $y:expr) => {
@@ -91,7 +91,7 @@ fn length_methods() {
     );
     assert_approx_eq!(
         vector1.length(),
-        10.0 * float_consts::SQRT_3,
+        10.0 * SQRT_3,
         "length should work as expected."
     );
     assert_eq!(

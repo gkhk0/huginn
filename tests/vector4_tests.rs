@@ -1,9 +1,9 @@
-#![feature(more_float_constants)]
-
 use huginn::float;
 use huginn::types::vectors::{Vector4, AXIS};
 use huginn::utils::float_consts;
 use huginn::utils::CMP_EPSILON;
+
+const SQRT_3: float!() = 1.732050807568877293527446341505872367;
 
 macro_rules! assert_approx_eq {
     ($x:expr, $y:expr) => {
@@ -317,16 +317,16 @@ fn operators() {
         Vector4::new(
             float_consts::E,
             float_consts::SQRT_2,
-            float_consts::SQRT_3,
-            float_consts::SQRT_3
+            SQRT_3,
+            SQRT_3
         )
         .to_string(),
         format!(
             "Vector4({}, {}, {}, {})",
             float_consts::E,
             float_consts::SQRT_2,
-            float_consts::SQRT_3,
-            float_consts::SQRT_3
+            SQRT_3,
+            SQRT_3
         ),
         "cast to String should print the correct amount of digits for real_t = let."
     );
