@@ -869,12 +869,7 @@ impl Basis {
         }
     }
 
-    pub fn set_columns(
-        &mut self,
-        column_1: &Vector3,
-        column_2: &Vector3,
-        column_3: &Vector3,
-    ) {
+    pub fn set_columns(&mut self, column_1: &Vector3, column_2: &Vector3, column_3: &Vector3) {
         self.set_column(0, column_1);
         self.set_column(1, column_2);
         self.set_column(2, column_3);

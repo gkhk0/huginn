@@ -1,5 +1,5 @@
 use huginn::types::vectors::{Vector3, Vector3i, AXIS};
-use huginn::utils::{float_consts, CMP_EPSILON, float};
+use huginn::utils::{float, float_consts, CMP_EPSILON};
 
 const SQRT_3: float!() = 1.732050807568877293527446341505872367;
 

@@ -314,13 +314,7 @@ fn operators() {
         "cast to String should work as expected."
     );
     assert_eq!(
-        Vector4::new(
-            float_consts::E,
-            float_consts::SQRT_2,
-            SQRT_3,
-            SQRT_3
-        )
-        .to_string(),
+        Vector4::new(float_consts::E, float_consts::SQRT_2, SQRT_3, SQRT_3).to_string(),
         format!(
             "Vector4({}, {}, {}, {})",
             float_consts::E,
@@ -471,8 +465,9 @@ fn linear_algebra_methods() {
         100.0,
         "dot product of same direction vectors should behave as expected."
     );
-    println!("{}",
-             ((vector1 * 2.0).dot(&(vector2 * 4.0))+25.9 * 8.0).abs()
+    println!(
+        "{}",
+        ((vector1 * 2.0).dot(&(vector2 * 4.0)) + 25.9 * 8.0).abs()
     );
     assert_approx_eq_with_tolerance!(
         (vector1 * 2.0).dot(&(vector2 * 4.0)),

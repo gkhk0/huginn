@@ -1,9 +1,9 @@
+use crate::types::vectors::{Vector4, AXIS};
+use crate::utils::{float, int, snapped_i};
+use auto_ops::{impl_op_ex, impl_op_ex_commutative};
 use std::cmp::Ordering;
 use std::fmt::Display;
 use std::ops::{Neg, Not};
-use auto_ops::{impl_op_ex, impl_op_ex_commutative};
-use crate::types::vectors::{Vector4, AXIS};
-use crate::utils::{float, int, snapped_i};
 
 /// A 4D vector using integer coordinates.
 ///
@@ -39,7 +39,7 @@ impl Vector4i {
 
     /// Returns a **Vector4i** with the given components.
     pub const fn new(x: int!(), y: int!(), z: int!(), w: int!()) -> Self {
-        Self {w, x, y, z}
+        Self { w, x, y, z }
     }
 
     /// Returns a new vector with all components in absolute values (i.e. positive).
@@ -49,24 +49,34 @@ impl Vector4i {
 
     /// Returns a new vector with all components clamped between the components of `min` and `max`, by running `clamp` on each component.
     pub fn clamp(&self, min: &Self, max: &Self) -> Self {
-        Self::new(self.x.clamp(min.x, max.x), self.y.clamp(min.y, max.y), self.z.clamp(min.z, max.z), self.w.clamp(min.w, max.w))
+        Self::new(
+            self.x.clamp(min.x, max.x),
+            self.y.clamp(min.y, max.y),
+            self.z.clamp(min.z, max.z),
+            self.w.clamp(min.w, max.w),
+        )
     }
 
     /// Returns a new vector with all components clamped between `min` and `max`, by running `clamp` on each component.
     pub fn clamp_i(&self, min: int!(), max: int!()) -> Self {
-        Self::new(self.x.clamp(min, max), self.y.clamp(min, max), self.z.clamp(min, max), self.w.clamp(min, max))
+        Self::new(
+            self.x.clamp(min, max),
+            self.y.clamp(min, max),
+            self.z.clamp(min, max),
+            self.w.clamp(min, max),
+        )
     }
 
     /// Returns the squared distance between this vector and `to`.
     ///
     /// This method runs faster than [`Vector4i::distance_to`], so prefer it if you need to compare vectors or need the squared distance for some formula.
     pub fn distance_squared_to(&self, to: &Self) -> int!() {
-        (to-self).length_squared()
+        (to - self).length_squared()
     }
 
     /// Returns the distance between this vector and `to`.
     pub fn distance_to(&self, to: &Self) -> float!() {
-        (to-self).length()
+        (to - self).length()
     }
 
     /// Returns the length (magnitude) of this vector.
@@ -83,7 +93,12 @@ impl Vector4i {
 
     /// Returns the component-wise maximum of this and `with`, equivalent to `Vector4i::new(x.max(with.x), y.max(with.y), z.max(with.z), w.max(with.w))`.
     pub fn max(&self, with: &Self) -> Self {
-        Self::new(self.x.max(with.x), self.y.max(with.y), self.z.max(with.z), self.w.max(with.w))
+        Self::new(
+            self.x.max(with.x),
+            self.y.max(with.y),
+            self.z.max(with.z),
+            self.w.max(with.w),
+        )
     }
 
     /// Returns the axis of the vector's highest value. If all components are equal, this method returns [`AXIS::X`].
@@ -115,12 +130,22 @@ impl Vector4i {
 
     /// Returns the component-wise maximum of this and `with`, equivalent to `Vector4i::new(x.max(with), y.max(with), z.max(with), w.max(with)).
     pub fn max_i(&self, with: int!()) -> Self {
-        Self::new(self.x.max(with), self.y.max(with), self.z.max(with), self.w.max(with))
+        Self::new(
+            self.x.max(with),
+            self.y.max(with),
+            self.z.max(with),
+            self.w.max(with),
+        )
     }
 
     /// Returns the component-wise minimum of this and `with`, equivalent to `Vector4i::new(x.min(with.x), y.min(with.y), z.min(with.z), w.min(with.w))`.
     pub fn min(&self, with: &Self) -> Self {
-        Self::new(self.x.min(with.x), self.y.min(with.y), self.z.min(with.z), self.w.min(with.w))
+        Self::new(
+            self.x.min(with.x),
+            self.y.min(with.y),
+            self.z.min(with.z),
+            self.w.min(with.w),
+        )
     }
 
     /// Returns the axis of the vector's lowest value. If all components are equal, this method returns [`AXIS::W`].
@@ -152,12 +177,22 @@ impl Vector4i {
 
     /// Returns the component-wise minimum of this and `with`, equivalent to `Vector4i::new(x.min(with), y.min(with), z.min(with), w.min(with))`.
     pub fn min_i(&self, with: int!()) -> Self {
-        Self::new(self.x.min(with), self.y.min(with), self.z.min(with), self.w.min(with))
+        Self::new(
+            self.x.min(with),
+            self.y.min(with),
+            self.z.min(with),
+            self.w.min(with),
+        )
     }
 
     /// Returns a new vector with each component set to `1` if it's positive, `-1` if it's negative, and `0` if it's zero. The result is identical to calling `sign` on each component.
     pub fn sign(&self) -> Self {
-        Self::new(self.x.signum(), self.y.signum(), self.z.signum(), self.w.signum())
+        Self::new(
+            self.x.signum(),
+            self.y.signum(),
+            self.z.signum(),
+            self.w.signum(),
+        )
     }
 
     /// Returns a new vector with each component snapped to the closest multiple of the corresponding component in `step`.
@@ -271,13 +306,8 @@ impl_op_ex!(%= |a: &mut Vector4i, b: &int!()| {
     a.w = a.w % b;
 });
 
-impl_op_ex!(* |a: &Vector4i, b: &Vector4i| -> Vector4i {
-    Vector4i::new(
-        a.x * b.x,
-        a.y * b.y,
-        a.z * b.z,
-        a.w * b.w,
-    )
+impl_op_ex!(*|a: &Vector4i, b: &Vector4i| -> Vector4i {
+    Vector4i::new(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w)
 });
 
 impl_op_ex!(*= |a: &mut Vector4i, b: &Vector4i| {
@@ -287,7 +317,7 @@ impl_op_ex!(*= |a: &mut Vector4i, b: &Vector4i| {
     a.w = a.w * b.w;
 });
 
-impl_op_ex_commutative!(* |a: &Vector4i, b: &float!()| -> Vector4 {
+impl_op_ex_commutative!(*|a: &Vector4i, b: &float!()| -> Vector4 {
     Vector4::new(
         a.x as float!() * b,
         a.y as float!() * b,
@@ -296,13 +326,8 @@ impl_op_ex_commutative!(* |a: &Vector4i, b: &float!()| -> Vector4 {
     )
 });
 
-impl_op_ex_commutative!(* |a: &Vector4i, b: &int!()| -> Vector4i {
-    Vector4i::new(
-        a.x * b,
-        a.y * b,
-        a.z * b,
-        a.w * b,
-    )
+impl_op_ex_commutative!(*|a: &Vector4i, b: &int!()| -> Vector4i {
+    Vector4i::new(a.x * b, a.y * b, a.z * b, a.w * b)
 });
 
 impl_op_ex!(*= |a: &mut Vector4i, b: &int!()| {
@@ -328,13 +353,8 @@ impl_op_ex!(+= |a: &mut Vector4i, b: &Vector4i| {
     a.w = a.w + b.w;
 });
 
-impl_op_ex!(- |a: &Vector4i, b: &Vector4i| -> Vector4i {
-    Vector4i::new(
-        a.x - b.x,
-        a.y - b.y,
-        a.z - b.z,
-        a.w - b.w,
-    )
+impl_op_ex!(-|a: &Vector4i, b: &Vector4i| -> Vector4i {
+    Vector4i::new(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w)
 });
 
 impl_op_ex!(-= |a: &mut Vector4i, b: &Vector4i| {

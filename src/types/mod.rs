@@ -1,4 +1,5 @@
 mod basis;
+mod color;
 mod quaternion;
 mod transform2d;
 mod transform3d;
@@ -6,6 +7,7 @@ mod transform3d;
 pub mod vectors;
 
 pub use basis::Basis;
+pub use color::Color;
 pub use quaternion::Quaternion;
 pub use transform2d::Transform2D;
 pub use transform3d::Transform3D;

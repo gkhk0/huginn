@@ -281,14 +281,9 @@ fn limiting_methods() {
         "limit_length should work as expected."
     );
     assert!(
-        vector.limit_length(5.0).is_equal_approx(
-            &(5.0
-                * Vector3::new(
-                    FRAC_1_SQRT_3,
-                    FRAC_1_SQRT_3,
-                    FRAC_1_SQRT_3
-                ))
-        ),
+        vector
+            .limit_length(5.0)
+            .is_equal_approx(&(5.0 * Vector3::new(FRAC_1_SQRT_3, FRAC_1_SQRT_3, FRAC_1_SQRT_3))),
         "limit_length should work as expected."
     );
     assert_eq!(
@@ -337,11 +332,7 @@ fn normalization_methods() {
     assert!(
         Vector3::new(1.0, 1.0, 1.0)
             .normalized()
-            .is_equal_approx(&Vector3::new(
-                FRAC_1_SQRT_3,
-                FRAC_1_SQRT_3,
-                FRAC_1_SQRT_3
-            )),
+            .is_equal_approx(&Vector3::new(FRAC_1_SQRT_3, FRAC_1_SQRT_3, FRAC_1_SQRT_3)),
         "normalized should work as expected."
     );
     assert_eq!(
@@ -511,11 +502,7 @@ fn other_methods() {
     assert!(
         Vector3::new(1.0, 1.0, 1.0)
             .direction_to(&Vector3::new(2.0, 2.0, 2.0))
-            .is_equal_approx(&Vector3::new(
-                FRAC_1_SQRT_3,
-                FRAC_1_SQRT_3,
-                FRAC_1_SQRT_3
-            )),
+            .is_equal_approx(&Vector3::new(FRAC_1_SQRT_3, FRAC_1_SQRT_3, FRAC_1_SQRT_3)),
         "direction_to should work as expected."
     );
     assert!(

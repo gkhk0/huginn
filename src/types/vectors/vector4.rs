@@ -627,6 +627,11 @@ impl Display for Vector4 {
 
 impl From<Vector4i> for Vector4 {
     fn from(value: Vector4i) -> Self {
-        Vector4::new(value.x as float!(), value.y as float!(), value.z as float!(), value.w as float!())
+        Vector4::new(
+            value.x as float!(),
+            value.y as float!(),
+            value.z as float!(),
+            value.w as float!(),
+        )
     }
 }
