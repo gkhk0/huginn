@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 auto_ops = "0.3.0"
 log = "0.4.22"
+okhsl = "1.0.1"
 rand = "0.9.0-alpha.2"
 
 [features]
