@@ -1,4 +1,4 @@
-use crate::types::vectors::AXIS;
+use crate::types::vectors::{Vector4i, AXIS};
 use crate::utils::{
     cubic_interpolate, cubic_interpolate_in_time, float, int, is_equal_approx,
     is_equal_approx_with_tolerance, is_zero_approx, posmod_f, snapped, FloatExt, UNIT_EPSILON,
@@ -622,5 +622,11 @@ impl Display for Vector4 {
             "Vector4({}, {}, {}, {})",
             self.x, self.y, self.z, self.w
         ))
+    }
+}
+
+impl From<Vector4i> for Vector4 {
+    fn from(value: Vector4i) -> Self {
+        Vector4::new(value.x as float!(), value.y as float!(), value.z as float!(), value.w as float!())
     }
 }
