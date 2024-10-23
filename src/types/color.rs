@@ -619,7 +619,7 @@ impl Color {
         } else {
             &Self::default()
         };
-        color_name(string.replace(" ","_").to_uppercase().as_str(), default)
+        color_name(string.replace(" ", "_").to_uppercase().as_str(), default)
     }
 
     /// Creates a **Color** from the given string, which can be either an HTML color code or a named color (case-insensitive). Returns `default` if the color cannot be inferred from the string.
@@ -1266,7 +1266,7 @@ impl Not for Color {
 impl Neg for Color {
     type Output = Self;
     fn neg(self) -> Self::Output {
-        Self::rgba(1.0-self.r, 1.0-self.g, 1.0-self.b, 1.0-self.a)
+        Self::rgba(1.0 - self.r, 1.0 - self.g, 1.0 - self.b, 1.0 - self.a)
     }
 }
 
