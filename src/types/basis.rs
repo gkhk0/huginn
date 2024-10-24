@@ -36,6 +36,36 @@ pub struct Basis {
 }
 
 impl Basis {
+    pub fn scaled_local(&self, scale: &Vector3) -> Basis {
+        self * Basis::from_scale(scale)
+    }
+}
+
+impl Basis {
+    pub fn set_quaternion_scale(&mut self, quaternion: &Quaternion, scale: &Vector3) {
+        self.set_diagonal(scale);
+        self.rotate(quaternion);
+    }
+    fn rotate(&mut self, quaternion: &Quaternion) {
+        *self *= Basis::from(quaternion);
+    }
+
+    fn set_diagonal(&mut self, diag: &Vector3) {
+        self.x.x = diag.x;
+        self.x.y = 0.0;
+        self.x.z = 0.0;
+
+        self.y.x = 0.0;
+        self.y.y = diag.y;
+        self.y.z = 0.0;
+
+        self.z.x = 0.0;
+        self.z.y = 0.0;
+        self.z.z = diag.z;
+    }
+}
+
+impl Basis {
     pub fn get_axis_angle(&self, axis: &mut Vector3, angle: &mut float!()) {
         // https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToAngle/index.htm
         if is_zero_approx(self.x.y - self.y.x)
@@ -229,6 +259,10 @@ impl Basis {
 
     pub const fn new(x: Vector3, y: Vector3, z: Vector3) -> Self {
         Basis::new_from_floats(x.x, y.x, z.x, x.y, y.y, z.y, x.z, y.z, z.z)
+    }
+    
+    pub const fn new_rows(x: Vector3, y: Vector3, z: Vector3) -> Self {
+        Self {x,y,z}
     }
 
     pub const fn new_from_floats(
@@ -600,7 +634,7 @@ impl Basis {
         self.z.z = zz;
     }
 
-    fn invert(&mut self) {
+    pub(crate) fn invert(&mut self) {
         macro_rules! cofac {
             ($row1:ident, $col1:ident, $row2:ident, $col2:ident) => {
                 self.$row1.$col1 * self.$row2.$col2 - self.$row1.$col2 * self.$row2.$col1
@@ -674,7 +708,7 @@ impl Basis {
         b
     }
 
-    fn orthonormalize(&mut self) {
+    pub(crate) fn orthonormalize(&mut self) {
         let mut x = self.get_column(0);
         let mut y = self.get_column(1);
         let mut z = self.get_column(2);
@@ -943,17 +977,22 @@ impl PartialEq for Basis {
 impl Eq for Basis {}
 
 impl_op_ex!(*|a: &Basis, b: &Basis| -> Basis {
-    Basis::new_from_floats(
-        b.t_dot_x(&a.x),
-        b.t_dot_y(&a.x),
-        b.t_dot_z(&a.x),
-        b.t_dot_x(&a.y),
-        b.t_dot_y(&a.y),
-        b.t_dot_z(&a.y),
-        b.t_dot_x(&a.z),
-        b.t_dot_y(&a.z),
-        b.t_dot_z(&a.z),
-    )
+    println!("basis before: {:?}", a);
+    let basis = Basis::new_from_floats(
+        b.t_dot_x(&a.x), b.t_dot_y(&a.x), b.t_dot_z(&a.x),
+        b.t_dot_x(&a.y), b.t_dot_y(&a.y), b.t_dot_z(&a.y),
+        b.t_dot_x(&a.z), b.t_dot_y(&a.z), b.t_dot_z(&a.z),
+    );
+    println!("basis: {:?}", basis);
+    basis
+});
+impl_op_ex!(*= |a: &mut Basis, b: &Basis| {
+    println!("basis before: {:?}", a);
+    //a.x.x = b.t_dot_x(&a.x); a.x.y = b.t_dot_y(&a.x); a.x.z = b.t_dot_z(&a.x);
+    //a.y.x = b.t_dot_x(&a.y); a.y.y = b.t_dot_y(&a.y); a.y.z = b.t_dot_z(&a.y);
+    //a.z.x = b.t_dot_x(&a.z); a.z.y = b.t_dot_y(&a.z); a.z.z = b.t_dot_z(&a.z);
+    *a = *a * b;
+    println!("basis: {:?}", a);
 });
 //TODO: impl_op_ex_commutative!(*|a: &Basis, b: &Vector3| -> Vector3 { todo!() });
 impl_op_ex_commutative!(*|a: &Basis, b: &float!()| -> Basis {
@@ -972,11 +1011,6 @@ impl_op_ex!(/ |a: &Basis, b: int!()| -> Basis {
     a/b as float!()
 });
 
-impl_op_ex!(*= |a: &mut Basis, b: &Basis| {
-    a.x = Vector3::new(b.t_dot_x(&a.x),b.t_dot_y(&a.x),b.t_dot_z(&a.x));
-    a.y = Vector3::new(b.t_dot_x(&a.y),b.t_dot_y(&a.y),b.t_dot_z(&a.y));
-    a.z = Vector3::new(b.t_dot_x(&a.z),b.t_dot_y(&a.z),b.t_dot_z(&a.z));
-});
 impl_op_ex!(*= |a: &mut Basis, b: &float!()| {
     a.x = a.x * b;
     a.y = a.y * b;
@@ -1019,5 +1053,13 @@ impl From<&Basis> for Quaternion {
     /// This constructor is faster than [`Basis::get_rotation_quaternion`], but the given basis must be *orthonormalized* (see [`Basis::orthonormalized`]). Otherwise, the constructor fails and returns [`Quaternion::IDENTITY`].
     fn from(b: &Basis) -> Self {
         b.get_quaternion()
+    }
+}
+
+impl From<(&Quaternion, &Vector3)> for Basis {
+    fn from(value: (&Quaternion, &Vector3)) -> Self {
+        let mut basis = Basis::default();
+        basis.set_quaternion_scale(value.0, value.1);
+        basis
     }
 }

@@ -164,7 +164,9 @@ impl Transform2D {
 
     pub fn set_skew(&mut self, angle: float!()) {
         let det = self.determinant();
-        self.y = det.sign() * self.x.rotated(float_consts::PI * 0.5 + angle).normalized() * self.y.length();
+        self.y = det.sign()
+            * self.x.rotated(float_consts::PI * 0.5 + angle).normalized()
+            * self.y.length();
     }
 
     /// Returns the result of the linear interpolation between this transform and `xform` by the given `weight`.
@@ -410,11 +412,9 @@ impl PartialEq for Transform2D {
 
 impl Eq for Transform2D {}
 
-impl_op_ex_commutative!(
-    *|a: &Transform2D, b: &Vec<Transform2D>| -> Vec<Transform2D> {
-        b.iter().map(|(&i)| i * a).collect()
-    }
-);
+impl_op_ex_commutative!(*|a: &Transform2D, b: &Vec<Vector2>| -> Vec<Vector2> {
+    b.iter().map(|(&i)| i * a).collect()
+});
 
 impl_op_ex!(*= |a: &mut Transform2D, b: &Transform2D| {
     a.origin = a.xform(&b.origin);
@@ -437,16 +437,12 @@ impl_op_ex!(*|a: &Transform2D, b: &Transform2D| -> Transform2D {
 
 // TODO: impl Rect2 * Transform2D
 
-impl_op_ex!(*= |a: &mut Transform2D, b: &Vector2| {
-    a.x *= b;
-    a.y *= b;
-    a.origin *= b;
-});
-
-impl_op_ex_commutative!(*|a: &Transform2D, b: &Vector2| -> Transform2D {
-    let mut t = *a;
-    t *= b;
-    t
+impl_op_ex_commutative!(*|a: &Transform2D, b: &Vector2| -> Vector2 {
+    let mut ret = *b;
+    ret.x = b.x * a.x.x + b.y * a.y.x;
+    ret.y = b.x * a.x.y + b.y * a.y.y;
+    ret += a.origin;
+    ret
 });
 
 impl_op_ex!(*= |a: &mut Transform2D, b: &float!()| {

@@ -304,7 +304,7 @@ fn product() {
 
     // Test ZYX dynamic-axes since test data is available online.
     // Rotate first about X axis, then new Y axis, then new Z axis.
-    // (Godot uses YXZ Yaw-Pitch-Roll order).
+    // (Grimm uses YXZ Yaw-Pitch-Roll order).
     let q_yp = q_y * q_p;
 
     let q_ryp = q_r * q_yp;
