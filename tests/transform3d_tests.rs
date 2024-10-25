@@ -44,8 +44,7 @@ fn translation() {
     // Check both versions against left and right multiplications.
     let orig = create_dummy_transform();
     let t = identity().translated(&offset);
-    
-    
+
     assert_eq!(
         identity().translated(&offset),
         identity().translated_local(&offset)
@@ -131,7 +130,7 @@ fn rotate_around_global_origin() {
 
     let rotated_transform = transform.rotated(&Vector3::new(0.0, 1.0, 0.0), float_consts::PI);
 
-    println!("!!!!!!!\n{:?}\n{:?}",rotated_transform, expected);
+    println!("!!!!!!!\n{:?}\n{:?}", rotated_transform, expected);
     assert!(
         rotated_transform.is_equal_approx(&expected),
         "The rotated transform should have a new orientation and basis."

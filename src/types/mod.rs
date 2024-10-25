@@ -1,6 +1,7 @@
 mod basis;
 mod color;
 mod quaternion;
+mod rect2;
 mod transform2d;
 mod transform3d;
 /// A module containing different vector structs.
@@ -9,8 +10,19 @@ pub mod vectors;
 pub use basis::Basis;
 pub use color::Color;
 pub use quaternion::Quaternion;
+pub use rect2::Rect2;
 pub use transform2d::Transform2D;
 pub use transform3d::Transform3D;
+
+#[derive(Copy, Clone, Debug)]
+pub enum Side {
+    Left,
+    Right,
+    Top,
+    Bottom,
+    Front,
+    Back,
+}
 
 #[derive(Clone, Copy)]
 pub enum EulerOrder {

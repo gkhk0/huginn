@@ -260,9 +260,9 @@ impl Basis {
     pub const fn new(x: Vector3, y: Vector3, z: Vector3) -> Self {
         Basis::new_from_floats(x.x, y.x, z.x, x.y, y.y, z.y, x.z, y.z, z.z)
     }
-    
+
     pub const fn new_rows(x: Vector3, y: Vector3, z: Vector3) -> Self {
-        Self {x,y,z}
+        Self { x, y, z }
     }
 
     pub const fn new_from_floats(
@@ -979,9 +979,15 @@ impl Eq for Basis {}
 impl_op_ex!(*|a: &Basis, b: &Basis| -> Basis {
     println!("basis before: {:?}", a);
     let basis = Basis::new_from_floats(
-        b.t_dot_x(&a.x), b.t_dot_y(&a.x), b.t_dot_z(&a.x),
-        b.t_dot_x(&a.y), b.t_dot_y(&a.y), b.t_dot_z(&a.y),
-        b.t_dot_x(&a.z), b.t_dot_y(&a.z), b.t_dot_z(&a.z),
+        b.t_dot_x(&a.x),
+        b.t_dot_y(&a.x),
+        b.t_dot_z(&a.x),
+        b.t_dot_x(&a.y),
+        b.t_dot_y(&a.y),
+        b.t_dot_z(&a.y),
+        b.t_dot_x(&a.z),
+        b.t_dot_y(&a.z),
+        b.t_dot_z(&a.z),
     );
     println!("basis: {:?}", basis);
     basis
