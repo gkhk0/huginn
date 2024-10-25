@@ -3,6 +3,7 @@ use crate::types::vectors::Vector2;
 use crate::types::{Side, Transform2D};
 use auto_ops::impl_op_ex;
 use std::fmt::{Display, Formatter};
+use std::ops::Not;
 
 /// A 2D axis-aligned bounding box using floating-point coordinates.
 ///
@@ -197,35 +198,35 @@ impl Rect2 {
 
     /// Returns `true` if this rectangle overlaps with the `b` rectangle. The edges of both rectangles are excluded, unless `include_borders` is `true`.
     pub fn intersects(&self, b: &Self, include_borders: bool) -> bool {
-        if (include_borders) {
+        if include_borders {
             if self.position.x > (b.position.x + b.size.x) {
                 return false;
             }
             if (self.position.x + self.size.x) < b.position.x {
                 return false;
             }
-            if (self.position.y > (b.position.y + b.size.y)) {
+            if self.position.y > (b.position.y + b.size.y) {
                 return false;
             }
-            if ((self.position.y + self.size.y) < b.position.y) {
+            if (self.position.y + self.size.y) < b.position.y {
                 return false;
             }
         } else {
-            if (self.position.x >= (b.position.x + b.size.x)) {
+            if self.position.x >= (b.position.x + b.size.x) {
                 return false;
             }
-            if ((self.position.x + self.size.x) <= b.position.x) {
+            if (self.position.x + self.size.x) <= b.position.x {
                 return false;
             }
-            if (self.position.y >= (b.position.y + b.size.y)) {
+            if self.position.y >= (b.position.y + b.size.y) {
                 return false;
             }
-            if ((self.position.y + self.size.y) <= b.position.y) {
+            if (self.position.y + self.size.y) <= b.position.y {
                 return false;
             }
         }
 
-        return true;
+        true
     }
 
     /// Returns `true` if this rectangle and `rect` are approximately equal, by calling [`Vector2::is_equal_approx`] on the `position` and the `size`.
@@ -316,5 +317,12 @@ impl Display for Rect2 {
             "[P: ({}, {}), S: ({}, {})]",
             self.position.x, self.position.y, self.size.x, self.size.y
         ))
+    }
+}
+
+impl Not for Rect2 {
+    type Output = bool;
+    fn not(self) -> Self::Output {
+        self.position == Vector2::ZERO && self.size == Vector2::ZERO
     }
 }
