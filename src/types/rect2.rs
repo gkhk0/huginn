@@ -4,6 +4,7 @@ use crate::types::{Side, Transform2D};
 use auto_ops::impl_op_ex;
 use std::fmt::{Display, Formatter};
 use std::ops::Not;
+use crate::types::rect2i::Rect2i;
 
 /// A 2D axis-aligned bounding box using floating-point coordinates.
 ///
@@ -280,13 +281,12 @@ impl Rect2 {
     }
 }
 
-// TODO: implement from Rect2i
-//impl From<Rect2i> for Rect {
-//    /// Constructs a **Rect2** from a [`Rect2i`].
-//    fn from(value: Rect2i) -> Self {
-//        todo!()
-//    }
-//}
+impl From<Rect2i> for Rect2 {
+    /// Constructs a **Rect2** from a [`Rect2i`].
+    fn from(value: Rect2i) -> Self {
+        Self::new(Vector2::from(value.position()), Vector2::from(value.size()))
+    }
+}
 
 impl PartialEq for Rect2 {
     fn eq(&self, other: &Self) -> bool {

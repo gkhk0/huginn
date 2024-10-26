@@ -1,6 +1,6 @@
 use huginn::float;
 use huginn::types::vectors::Vector2;
-use huginn::types::Rect2;
+use huginn::types::{Rect2, Rect2i};
 use huginn::types::Side::Top;
 use huginn::utils::{is_zero_approx, CMP_EPSILON};
 
@@ -26,8 +26,7 @@ fn constructor_methods() {
     let rect = Rect2::new_from_dimension(0.0, 100.0, 1280.0, 720.0);
     let rect_vector = Rect2::new(Vector2::new(0.0, 100.0), Vector2::new(1280.0, 720.0));
     let rect_copy_rect = Rect2::from(rect);
-    // TODO: implement Rect2i
-    // let rect_copy_recti = Rect2::from(Rect2i::new_from_dimension(0.0, 100.0, 1280.0, 720.0));
+    let rect_copy_recti = Rect2::from(Rect2i::new_from_dimension(0, 100, 1280, 720));
 
     assert_eq!(
         rect, rect_vector,
@@ -37,9 +36,9 @@ fn constructor_methods() {
         rect, rect_copy_rect,
         "Rect2s created with the same dimensions but by different methods should be equal."
     );
-    //assert_eq!(
-    //    rect , rect_copy_recti,
-    //    "Rect2s created with the same dimensions but by different methods should be equal.");
+    assert_eq!(
+        rect , rect_copy_recti,
+        "Rect2s created with the same dimensions but by different methods should be equal.");
 }
 
 #[test]

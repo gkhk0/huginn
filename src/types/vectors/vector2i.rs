@@ -137,7 +137,7 @@ impl Vector2i {
     }
 
     /// Returns the component-wise minimum of this and `with`, equivalent to `Vector2i::new(x.min(with), y.min(with))`.
-    pub fn mini(&self, with: int!()) -> Self {
+    pub fn min_i(&self, with: int!()) -> Self {
         Self::new(self.x.min(with), self.y.min(with))
     }
 

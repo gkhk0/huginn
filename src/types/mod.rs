@@ -6,11 +6,13 @@ mod transform2d;
 mod transform3d;
 /// A module containing different vector structs.
 pub mod vectors;
+mod rect2i;
 
 pub use basis::Basis;
 pub use color::Color;
 pub use quaternion::Quaternion;
 pub use rect2::Rect2;
+pub use rect2i::Rect2i;
 pub use transform2d::Transform2D;
 pub use transform3d::Transform3D;
 
