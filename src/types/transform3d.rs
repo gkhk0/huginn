@@ -79,7 +79,7 @@ impl Transform3D {
     /// **Note:** For this method to return correctly, the transform's `basis` needs to be *orthonormal* (see [`Basis::orthonormalized`]). That means, the basis should only represent a rotation. If it does not, use [`affine_inverse`](Transform3D::affine_inverse) instead.
     pub fn inverse(&self) -> Self {
         // FIXME: this function assumes the basis is a rotation matrix, with no scaling.
-        // Transform3D::affine_inverse can handle matrices with scaling, so GDScript should eventually use that.
+        // Transform3D::affine_inverse can handle matrices with scaling, so that should eventually be used.
         let mut ret = *self;
         ret.invert();
         ret

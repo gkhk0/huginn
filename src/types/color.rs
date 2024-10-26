@@ -37,7 +37,7 @@ impl Color {
     // Bisque color.
     pub const BISQUE: Color = Color::rgba(1.0, 0.894118, 0.768627, 1.0);
 
-    // Black color. In GDScript, this is the default value of any color.
+    // Black color. In Grimm, this is the default value of any color.
     pub const BLACK: Color = Color::rgba(0.0, 0.0, 0.0, 1.0);
 
     // Blanched almond color.
